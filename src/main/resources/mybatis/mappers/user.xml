@@ -23,11 +23,21 @@
 	<!-- 회원정보 수정용 한명 정보 가져오기 -->
 	<select id="getUserInfo" parameterType="int" resultType="com.javaex.vo.UserVo">
       <![CDATA[
-         select id, password, name, gender 
+         select no, id, password, name, gender 
          from users
          where no= #{no}
       ]]>
 	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="modifyUser" parameterType="com.javaex.vo.UserVo">
+		update users
+		set password = #{password},
+			name = #{name},
+			gender = #{gender}
+		where no = #{no}
+	
+	</update>
 
 
 </mapper>

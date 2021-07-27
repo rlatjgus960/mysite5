@@ -89,6 +89,8 @@
 							<div class="button-area">
 								<button type="submit" id="btn-submit">회원정보수정</button>
 							</div>
+							
+							<input type="hidden" name="no" value="${UserVo.no }">
 
 						</form>
 

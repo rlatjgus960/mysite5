@@ -70,7 +70,7 @@ public class UserController {
 	
 	//회원가입
 	@RequestMapping(value="/user/join", method= {RequestMethod.GET, RequestMethod.POST})
-	public String join(UserVo userVo) {
+	public String join(@ModelAttribute UserVo userVo) {
 		System.out.println("[UserController.join()]");
 		
 		userService.insertUser(userVo);
@@ -97,11 +97,14 @@ public class UserController {
 	
 	//회원정보 수정
 	@RequestMapping(value="user/modify", method= {RequestMethod.GET, RequestMethod.POST})
-	public String modify() {
+	public String modify(@ModelAttribute UserVo userVo, HttpSession session) {
 		System.out.println("[UserController.modify()]");
 		
-		userService.modifyUser();
+		userService.modifyUser(userVo);
 		
+		UserVo uVo = userService.getUserInfo(userVo.getNo());
+		
+		((UserVo)session.getAttribute("authUser")).setName(uVo.getName());
 		
 		return "redirect:/main";
 	}

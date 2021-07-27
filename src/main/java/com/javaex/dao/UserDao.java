@@ -35,4 +35,10 @@ public class UserDao {
 		
 		return sqlSession.selectOne("user.getUserInfo", no);
 	}
+	
+	public int modifyUser(UserVo userVo) {
+		System.out.println("[UserDao.modifyUser()]");
+		
+		return sqlSession.update("modifyUser", userVo);
+	}
 }
