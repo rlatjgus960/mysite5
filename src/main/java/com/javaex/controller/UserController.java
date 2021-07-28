@@ -110,8 +110,6 @@ public class UserController {
 		authUser.setName(uVo.getName());
 		
 		
-		
-		
 		return "redirect:/main";
 	}
 	
