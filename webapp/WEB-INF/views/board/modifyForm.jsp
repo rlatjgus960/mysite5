@@ -75,6 +75,7 @@
 							</div>
 
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/board/read?no=${boardVo.no}">취소</a>
+							<input type="hidden" name="userNo" value="${authUser.no }">
 							<button id="btn_modify" type="submit">수정</button>
 
 						</form>

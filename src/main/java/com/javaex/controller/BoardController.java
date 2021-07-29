@@ -37,8 +37,16 @@ public class BoardController {
 
 	// 글쓰기폼
 	@RequestMapping(value = "/board/writeForm", method = { RequestMethod.GET, RequestMethod.POST })
-	public String writeForm() {
+	public String writeForm(HttpSession session) {
 		System.out.println("[BoardController.writeForm()]");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		//로그인 안한경우 --> 메인
+		if(authUser == null) {
+			System.out.println("로그인 안한경우");
+			return "redirect:/board/list";
+		}
 
 		return "board/writeForm";
 	}
@@ -88,14 +96,29 @@ public class BoardController {
 
 	// 수정폼
 	@RequestMapping(value = "/board/modifyForm", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modifyForm(@RequestParam("no") int no, Model model) {
+	public String modifyForm(@RequestParam("no") int no, Model model, HttpSession session) {
 		System.out.println("[BoardController.modifyForm()]");
 
 		BoardVo boardVo = boardService.getContent(no);
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
 
-		model.addAttribute("boardVo", boardVo);
-
-		return "board/modifyForm";
+		//로그인 안한경우 --> 메인
+		if(authUser == null) {
+			System.out.println("로그인 안한경우");
+			return "redirect:/main";
+		}
+		
+		//로그인한 사용자가 자신의 글만 수정할 수 있도록 하기, 다른 게시글 접근해서 수정 못하게 하기
+		if(authUser.getNo() == boardVo.getUserNo()) { //로그인한 사용자 == 글 작성자
+			System.out.println("자신의 글인 경우-->수정폼 포워드");
+			model.addAttribute("boardVo", boardVo);
+			return "board/modifyForm";
+		}else {
+			System.out.println("다른사람 글인 경우");
+			return "redirect:/board/list";
+		}
+		
 	}
 
 	// 수정
