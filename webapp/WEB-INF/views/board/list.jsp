@@ -73,7 +73,8 @@
 										<td>${boardList.hit }</td>
 										<td>${boardList.regDate }</td>
 										<c:if test="${boardList.userNo eq authUser.no }">
-											<td><a href="${pageContext.request.contextPath}/board/delete?no=${boardList.no}&userNo=${authUser.no}">[삭제]</a></td>
+											<td><a
+												href="${pageContext.request.contextPath}/board/delete?no=${boardList.no}&userNo=${authUser.no}">[삭제]</a></td>
 										</c:if>
 									</tr>
 
@@ -101,7 +102,10 @@
 
 							<div class="clear"></div>
 						</div>
-						<a id="btn_write" href="${pageContext.request.contextPath}/board/writeForm">글쓰기</a>
+
+						<c:if test="${not empty authUser}">
+							<a id="btn_write" href="${pageContext.request.contextPath}/board/writeForm">글쓰기</a>
+						</c:if>
 
 					</div>
 					<!-- //list -->

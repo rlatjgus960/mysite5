@@ -65,7 +65,8 @@ public class BoardController {
 
 		// System.out.println(boardList);
 		
-		List<BoardVo> boardList = boardService.getList(keyword);
+		List<BoardVo> boardList = boardService.getList(keyword); 
+		//키워드 있거나 없거나 돌아가게 저렇게 받아서.. 겟리스트로 String형태로 계속 넘겨줌, 쿼리문이 받아서 처리.. 스트링형 (주소값 형태, set,get 없음) 받아서 쓰는게 value
 		
 		model.addAttribute("boardList", boardList);
 

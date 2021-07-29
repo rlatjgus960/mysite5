@@ -9,8 +9,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="/mysite/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -20,14 +20,11 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
 		<div id="container" class="clearfix">
-			<div id="aside">
-				<h2>방명록</h2>
-				<ul>
-					<li>일반방명록</li>
-					<li>ajax방명록</li>
-				</ul>
-			</div>
-			<!-- //aside -->
+
+			<!-- 방명록 aside -->
+			<c:import url="/WEB-INF/views/includes/asideGuestbook.jsp"></c:import>
+			<!-- //방명록 aside -->
+
 
 			<div id="content">
 
@@ -44,7 +41,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form action="/mysite/guest" method="post">
+					<form action="${pageContext.request.contextPath}/guestbook/write" method="post">
 						<table id="guestAdd">
 							<colgroup>
 								<col style="width: 70px;">
@@ -59,7 +56,7 @@
 									<td><input id="input-uname" type="text" name="name"></td>
 									<th><label class="form-text" for="input-pass">패스워드</label>
 									</th>
-									<td><input id="input-pass" type="password" name="pass"></td>
+									<td><input id="input-pass" type="password" name="password"></td>
 								</tr>
 								<tr>
 									<td colspan="4"><textarea name="content" cols="72" rows="5"></textarea></td>
@@ -71,7 +68,6 @@
 
 						</table>
 						<!-- //guestWrite -->
-						<input type="hidden" name="action" value="add">
 
 					</form>
 
@@ -89,7 +85,7 @@
 								<td>${guestbookList.no }</td>
 								<td>${guestbookList.name}</td>
 								<td>${guestbookList.regDate}</td>
-								<td><a href="/mysite/guest?action=dform&no=${guestbookList.no}">[삭제]</a></td>
+								<td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?no=${guestbookList.no}">[삭제]</a></td>
 							</tr>
 							<tr>
 								<td colspan=4 class="text-left">${guestbookList.content}</td>

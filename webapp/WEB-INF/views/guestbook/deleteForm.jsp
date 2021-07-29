@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/mysite/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -18,14 +18,11 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
 		<div id="container" class="clearfix">
-			<div id="aside">
-				<h2>방명록</h2>
-				<ul>
-					<li>일반방명록</li>
-					<li>ajax방명록</li>
-				</ul>
-			</div>
-			<!-- //aside -->
+
+			<!-- 방명록 aside -->
+			<c:import url="/WEB-INF/views/includes/asideGuestbook.jsp"></c:import>
+			<!-- //방명록 aside -->
+
 
 			<div id="content">
 
@@ -43,7 +40,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form action="/mysite/guest" method="post">
+					<form action="${pageContext.request.contextPath}/guestbook/delete" method="post">
 						<table id="guestDelete">
 							<colgroup>
 								<col style="width: 10%;">
@@ -53,13 +50,12 @@
 							</colgroup>
 							<tr>
 								<td>비밀번호</td>
-								<td><input type="password" name="pass"></td>
+								<td><input type="password" name="password"></td>
 								<td class="text-left"><button type="submit">삭제</button></td>
-								<td><a href="/mysite/guest?action=list">[메인으로 돌아가기]</a></td>
+								<td><a href="${pageContext.request.contextPath}/guestbook/list">[메인으로 돌아가기]</a></td>
 							</tr>
 						</table>
 						<input type='hidden' name="no" value="${param.no }">
-						<input type='hidden' name="action" value="delete">
 					</form>
 
 				</div>
