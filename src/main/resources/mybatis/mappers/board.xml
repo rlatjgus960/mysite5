@@ -26,7 +26,7 @@
 			from board b, users u 
 			where b.user_no = u.no
 			and b.no = #{no}
-			order by b.no desc
+
 		]]>
 
 	</select>
@@ -101,7 +101,8 @@
 	</delete>
 
 
-	<!-- 게시글 1개 가져오기 -->
+	<!-- 게시글 1개 가져오기, 기존거랑 중복됨, 항상 1대1로 사용되지 않는다!! 이미 있는것 활용할 수 있나 보기 -->
+	<!-- 
 	<select id="selectContent" parameterType="int" resultType="com.javaex.vo.BoardVo">
 		<![CDATA[
 			select  b.no,
@@ -117,6 +118,7 @@
 		]]>
 
 	</select>
+	 -->
 
 
 

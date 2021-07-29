@@ -72,7 +72,7 @@ public class BoardDao {
 		System.out.println("[BoardDao.selectContent()]");
 		System.out.println(no);
 		
-		BoardVo boardVo = sqlSession.selectOne("selectContent", no);
+		BoardVo boardVo = sqlSession.selectOne("selectBoard", no);
 		
 		System.out.println(boardVo);
 				
@@ -81,7 +81,7 @@ public class BoardDao {
 	
 	//수정
 	public int updateContent(BoardVo boardVo) {
-		System.out.println("[BoardDao.selectContent()]");
+		System.out.println("[BoardDao.updateContent()]");
 		
 		return sqlSession.update("updateContent", boardVo);
 	}
