@@ -69,7 +69,7 @@
 								<span class="form-value">${boardVo.content} </span>
 							</div>
 
-							<c:if test="${not empty authUser}">
+							<c:if test="${authUser.no eq boardVo.userNo}">
 								<a id="btn_modify"
 									href="${pageContext.request.contextPath}/board/modifyForm?no=${boardVo.no}">수정</a>
 							</c:if>
