@@ -57,14 +57,16 @@ public class BoardController {
 
 	// 리스트
 	@RequestMapping(value = "/board/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(Model model) {
+	public String list(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
 		System.out.println("[BoardController.list()]");
 
-		List<BoardVo> boardList = boardService.getList();
+		
 
 		// System.out.println(boardList);
-
+		
+		List<BoardVo> boardList = boardService.getList(keyword);
+		
 		model.addAttribute("boardList", boardList);
 
 		return "board/list";

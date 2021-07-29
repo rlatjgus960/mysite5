@@ -52,10 +52,10 @@ public class BoardDao {
 	
 	
 	//게시판 리스트 가져오기
-	public List<BoardVo> getList() {
+	public List<BoardVo> getList(String keyword) {
 		System.out.println("[BoardDao.getList()]");
 		
-		return sqlSession.selectList("board.getList");
+		return sqlSession.selectList("board.getList", keyword);
 	}
 	
 	//삭제

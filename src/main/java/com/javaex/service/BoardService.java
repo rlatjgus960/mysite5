@@ -34,11 +34,11 @@ public class BoardService {
 	}
 
 	// 게시판 리스트 가져오기
-	public List<BoardVo> getList() {
+	public List<BoardVo> getList(String keyword) {
 
 		System.out.println("[BoardServce.getList()]");
 
-		return boardDao.getList();
+		return boardDao.getList(keyword);
 	}
 
 	//삭제
