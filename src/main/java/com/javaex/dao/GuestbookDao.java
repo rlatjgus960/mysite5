@@ -37,5 +37,17 @@ public class GuestbookDao {
 		
 		return sqlSession.delete("guestbookDelete", guestbookVo);
 	}
+	
+	//방명록 글 저장 - ajax
+	public int insertGuestbookKey(GuestbookVo guestbookVo) {
+		System.out.println("[GuestbookDao.insertGuestbookKey()]");
+		
+		return sqlSession.insert("guestbook.insertGuestbookKey", guestbookVo);
+	}
 
+	//방명록 글 가져오기 - ajax
+	public GuestbookVo selectGuestbook(int no) {
+		System.out.println("[guestbookDao.selectGuestbook()]");
+		return sqlSession.selectOne("guestbook.selectGuestbook", no);
+	}
 }
