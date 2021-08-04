@@ -13,13 +13,14 @@ import com.javaex.service.GuestbookService;
 import com.javaex.vo.GuestbookVo;
 
 @Controller
+@RequestMapping(value="/api/guestbook")
 public class ApiGuestbookController {
 	@Autowired
 	private GuestbookService guestbookService;
 
 	// ajax 리스트 가져오기
 	@ResponseBody // 데이터를 바디에 넣어서 보내는것, 주소만 넣으면 안되고 데이터도 같이 넣어서
-	@RequestMapping(value = "api/guestbook/list", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public List<GuestbookVo> List() {
 		System.out.println("[ApiGuestbookController.list()]");
 
@@ -31,7 +32,7 @@ public class ApiGuestbookController {
 
 	// ajax 방명록 저장
 	@ResponseBody //이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에...
-	@RequestMapping(value = "api/guestbook/write", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
 	public GuestbookVo write(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("[ApiGuestbookController.write()]");
 
@@ -42,6 +43,19 @@ public class ApiGuestbookController {
 		return resultVo;
 	}
 	
-	
+	// ajax 방명록 삭제
+	@ResponseBody
+	@RequestMapping(value = "/remove", method = { RequestMethod.GET, RequestMethod.POST })
+	public int remove(@ModelAttribute GuestbookVo guestbookVo) {
+		
+		System.out.println("[ApiGuestbookController.remove()]");
+		
+		System.out.println(guestbookVo);
+		
+		int count = guestbookService.guestbookDelete(guestbookVo);
+		System.out.println(count);
+		
+		return count;
+	}
 
 }
