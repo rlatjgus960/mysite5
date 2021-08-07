@@ -38,12 +38,12 @@
 			<div id="content">
 
 				<div id="content-head" class="clearfix">
-					<h3>일반방명록</h3>
+					<h3>ajax 방명록</h3>
 					<div id="location">
 						<ul>
 							<li>홈</li>
 							<li>방명록</li>
-							<li class="last">일반방명록</li>
+							<li class="last">ajax 방명록</li>
 						</ul>
 					</div>
 				</div>
@@ -74,6 +74,10 @@
 									<td colspan="4" class="text-center"><button id="btnSubmit" type="submit">등록</button></td>
 								</tr>
 							</tbody>
+							
+							<button id="btnshow" type="button">보이기</button>
+							<button id="btnhide" type="button">숨기기</button>
+							
 
 						</table>
 						<!-- //guestWrite -->
@@ -225,12 +229,12 @@
 				/*성공시 처리해야될 코드 작성*/
 				console.log(guestbookVo);
 				render(guestbookVo, "up");
-				
+
 				//입력폼 초기화
 				$("#input-uname").val("");
 				$("#input-pass").val("");
 				$("[name='content']").val("");
-				
+
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -242,56 +246,56 @@
 	//삭제 버튼을 클릭할때
 	$("#listArea").on("click", ".btnDel", function() {
 		console.log("삭제 버튼 클릭");
-		
+
 		//hidden no 입력하기
 		var tag = $(this);
 		var no = tag.data("no");
 		$("[name=no]").val(no);
-		
+
 		//비밀번호 창 초기화
 		$("#modalPassword").val("");
-		
+
 		//모달창 보이기
-		$("#delModal").modal(); 
+		$("#delModal").modal();
 	});
 
 	//삭제모달창의 삭제버튼 클릭할때
-	$("#modalBtnDel").on("click",function(){
+	$("#modalBtnDel").on("click", function() {
 		console.log("모달창 삭제버튼 클릭");
-		
+
 		var guestbookVo = {
-				no: $("[name=no]").val(),
-				password: $("[name=password]").val()
-				
+			no : $("[name=no]").val(),
+			password : $("[name=password]").val()
+
 		};
-		
+
 		var no = $("[name='no']").val();
-		
+
 		console.log(guestbookVo);
-		
+
 		//서버에 삭제요청(no, password 전달)
 		$.ajax({
-			
-			url : "${pageContext.request.contextPath }/api/guestbook/remove",		
+
+			url : "${pageContext.request.contextPath }/api/guestbook/remove",
 			type : "post",
 			//contentType : "application/json",
 			data : guestbookVo,
 
 			dataType : "json",
-			success : function(count){
+			success : function(count) {
 				/*성공시 처리해야될 코드 작성*/
-				
-				if(count === 1){
+
+				if (count === 1) {
 					//모달창 닫기
 					$("#delModal").modal("hide");
-					
+
 					//삭제된 테이블을 화면에서 지운다
-					$("#t-"+no).remove();
-				}else {
+					$("#t-" + no).remove();
+				} else {
 					//모달창 닫기
 					$("#delModal").modal("hide");
 				}
-				
+
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -299,11 +303,12 @@
 		});
 
 	});
-	
+
 	//
 	function fetchList() {
-		
+
 		$.ajax({
+			
 			url : "${pageContext.request.contextPath }/api/guestbook/list",
 			type : "post", //어차피 주소창 치고 가는거 아니라서 사용자한테 안보임, get 해도 됨
 			contentType : "application/json",
@@ -324,10 +329,9 @@
 				console.error(status + " : " + error);
 			}
 		});
-		
+
 	};
-	
-	
+
 	//방명록 한개씩 렌더링
 	function render(guestbookVo, type) {
 
@@ -360,6 +364,27 @@
 		}
 
 	};
+	
+	
+	
+	
+	
+	/* 보이기 숨기기 예제 */
+	$("#btnhide").on("click", function(){
+		console.log("숨기기버튼 클릭");
+		
+		$("#btnSubmit").hide();
+		
+	});
+	
+	$("#btnshow").on("click", function(){
+		console.log("보이기버튼 클릭");
+		
+		$("#btnSubmit").show();
+		
+	});
+	
+	
 </script>
 
 

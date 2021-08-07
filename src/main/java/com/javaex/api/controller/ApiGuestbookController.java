@@ -13,7 +13,7 @@ import com.javaex.service.GuestbookService;
 import com.javaex.vo.GuestbookVo;
 
 @Controller
-@RequestMapping(value="/api/guestbook")
+@RequestMapping(value = "/api/guestbook")
 public class ApiGuestbookController {
 	@Autowired
 	private GuestbookService guestbookService;
@@ -31,30 +31,30 @@ public class ApiGuestbookController {
 	}
 
 	// ajax 방명록 저장
-	@ResponseBody //이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에...
+	@ResponseBody // 이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에...
 	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
 	public GuestbookVo write(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("[ApiGuestbookController.write()]");
 
 		System.out.println(guestbookVo);
-		
+
 		GuestbookVo resultVo = guestbookService.writeResultVo(guestbookVo);
 
 		return resultVo;
 	}
-	
+
 	// ajax 방명록 삭제
 	@ResponseBody
 	@RequestMapping(value = "/remove", method = { RequestMethod.GET, RequestMethod.POST })
 	public int remove(@ModelAttribute GuestbookVo guestbookVo) {
-		
+
 		System.out.println("[ApiGuestbookController.remove()]");
-		
+
 		System.out.println(guestbookVo);
-		
+
 		int count = guestbookService.guestbookDelete(guestbookVo);
 		System.out.println(count);
-		
+
 		return count;
 	}
 

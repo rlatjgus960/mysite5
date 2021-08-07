@@ -4,6 +4,60 @@
 <mapper namespace="board">
 
 
+	<!-- 전체 게시물 갯수 구하기 -->
+	<select id="selectTotalCnt" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*)
+			from board b, users u
+			where b.user_no = u.no
+		]]>
+		
+		<if test="_parameter != null and _parameter != ''">
+			and b.title like '%'|| #{keyword} ||'%' 
+		</if>
+	
+	</select>
+
+	<!-- 게시판 페이징 연습용 리스트, if에 ||은 더하기표시 -->
+	<select id="selectList2" parameterType="map" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  rt.rn,
+        			rt.no,
+        			rt.title,
+        			rt.hit,
+        			rt.regDate,
+        			rt.userNo,
+        			rt.name
+			from ( select  rownum rn,
+               			   ot.no,
+               		  	   ot.title,
+               			   ot.hit,
+               			   ot.regDate,
+               			   ot.userNo,
+               			   ot.name
+       			   from( select  b.no,
+                     			 b.title,
+                    			 b.content,
+                    			 b.hit,
+                    			 to_char(b.reg_date, 'YY-MM-DD HH24:MI') regDate,
+                    			 b.user_no userNo,
+                    			 u.name 
+             			 from board b, users u 
+             			 where b.user_no = u.no
+        ]]>
+        
+        				<if test="keyword != null and keyword !='' ">
+        				and b.title like '%'|| #{keyword} ||'%' 
+        				</if>
+             			 
+        <![CDATA[
+             			 order by b.no desc ) ot ) rt 
+			where rn >= #{startRnum}
+			and rn <= #{endRnum}
+		]]>
+
+	</select>
+
 	<!-- 조회수 올리기(글읽기) -->
 	<update id="updateHit" parameterType="int">
 		<![CDATA[
@@ -49,22 +103,8 @@
 
 
 	<!-- 게시판 리스트 가져오기 -->
-	<!-- 
-	<select id="getList" resultType="com.javaex.vo.BoardVo">
-		<![CDATA[
-			select  b.no,
-            		b.title,
-        			b.hit,
-        			to_char(b.reg_date, 'YYYY-MM-DD') regDate,
-        			b.user_no userNo,
-        			u.name 
-			from board b, users u 
-			where b.user_no = u.no
-			order by b.no desc
-		]]>
-
-	</select>
-	 -->
+	<!-- <select id="getList" resultType="com.javaex.vo.BoardVo"> <![CDATA[ select b.no, b.title, b.hit, to_char(b.reg_date, 'YYYY-MM-DD') regDate, b.user_no 
+		userNo, u.name from board b, users u where b.user_no = u.no order by b.no desc ]]> </select> -->
 
 
 
@@ -87,8 +127,8 @@
 			order by b.no desc
 		]]>
 	</select>
-	
-	
+
+
 
 	<!-- 삭제 -->
 	<delete id="deleteContent" parameterType="com.javaex.vo.BoardVo">
@@ -102,23 +142,8 @@
 
 
 	<!-- 게시글 1개 가져오기, 기존거랑 중복됨, 항상 1대1로 사용되지 않는다!! 이미 있는것 활용할 수 있나 보기 -->
-	<!-- 
-	<select id="selectContent" parameterType="int" resultType="com.javaex.vo.BoardVo">
-		<![CDATA[
-			select  b.no,
-            		b.title,
-       			    b.content,
-        			b.hit,
-        			to_char(b.reg_date, 'YYYY-MM-DD') regDate,
-        			b.user_no userNo,
-        			u.name 
-			from board b, users u 
-			where b.user_no = u.no
-			and b.no = #{no}
-		]]>
-
-	</select>
-	 -->
+	<!-- <select id="selectContent" parameterType="int" resultType="com.javaex.vo.BoardVo"> <![CDATA[ select b.no, b.title, b.content, b.hit, to_char(b.reg_date, 
+		'YYYY-MM-DD') regDate, b.user_no userNo, u.name from board b, users u where b.user_no = u.no and b.no = #{no} ]]> </select> -->
 
 
 

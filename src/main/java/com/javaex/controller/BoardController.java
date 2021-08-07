@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,45 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	//게시판 페이징 연습용 리스트
+	@RequestMapping(value = "/board/list2", method = { RequestMethod.GET, RequestMethod.POST })
+	public String list2(Model model,@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage, 
+						@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+
+		System.out.println("[BoardController.list2()]");
+		
+		
+		Map<String, Object> listMap = boardService.getList2(crtPage, keyword); //crtPage 나중에 추가됨, 서비스로 가져가서 계산해줄려구.. 서비스도 수정
+		System.out.println(listMap);
+		
+		model.addAttribute("listMap", listMap);
+
+		return "board/list2";
+	}
+	
+	
+
+	// 리스트
+	@RequestMapping(value = "/board/list", method = { RequestMethod.GET, RequestMethod.POST })
+	public String list(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+
+		System.out.println("[BoardController.list()]");
+
+		
+
+		// System.out.println(boardList);
+		
+		List<BoardVo> boardList = boardService.getList(keyword); 
+		//키워드 있거나 없거나 돌아가게 저렇게 받아서.. 겟리스트로 String형태로 계속 넘겨줌, 쿼리문이 받아서 처리.. 스트링형 (주소값 형태, set,get 없음) 받아서 쓰는게 value
+		
+		model.addAttribute("boardList", boardList);
+
+		return "board/list";
+	}
+	
+	
+	
+	
 	// 글 읽기
 	@RequestMapping(value = "/board/read", method = { RequestMethod.GET, RequestMethod.POST })
 	public String read(@RequestParam("no") int no, Model model) {
@@ -63,23 +103,6 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 
-	// 리스트
-	@RequestMapping(value = "/board/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
-
-		System.out.println("[BoardController.list()]");
-
-		
-
-		// System.out.println(boardList);
-		
-		List<BoardVo> boardList = boardService.getList(keyword); 
-		//키워드 있거나 없거나 돌아가게 저렇게 받아서.. 겟리스트로 String형태로 계속 넘겨줌, 쿼리문이 받아서 처리.. 스트링형 (주소값 형태, set,get 없음) 받아서 쓰는게 value
-		
-		model.addAttribute("boardList", boardList);
-
-		return "board/list";
-	}
 
 	// 삭제
 	@RequestMapping(value = "/board/delete", method = { RequestMethod.GET, RequestMethod.POST })
