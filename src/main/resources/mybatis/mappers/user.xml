@@ -38,6 +38,17 @@
 		where no = #{no}
 	
 	</update>
+	
+	
+	<!-- ajax 아이디 중복체크용 vo 가져오기 -->
+		<select id="selectUserIdck" parameterType="String" resultType="com.javaex.vo.UserVo">
+      <![CDATA[
+         select no, id, password, name, gender 
+         from users
+         where id= #{id}
+      ]]>
+	</select>
+	
 
 
 </mapper>

@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -61,7 +64,7 @@ public class UserController {
 	
 	
 	//회원가입폼
-	@RequestMapping(value="user/joinForm", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/user/joinForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String joinForm() {
 		System.out.println("[UserController.joinForm()]");
 		
@@ -81,7 +84,7 @@ public class UserController {
 	
 	
 	//회원정보 수정폼
-	@RequestMapping(value="user/modifyForm", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/user/modifyForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String modifyForm(HttpSession session, Model model) {
 		System.out.println("[UserController.modifyForm()]");
 		
@@ -96,7 +99,7 @@ public class UserController {
 	
 	
 	//회원정보 수정
-	@RequestMapping(value="user/modify", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/user/modify", method= {RequestMethod.GET, RequestMethod.POST})
 	public String modify(@ModelAttribute UserVo userVo, HttpSession session) {
 		System.out.println("[UserController.modify()]");
 		
@@ -114,6 +117,27 @@ public class UserController {
 	}
 	
 	
+	//ajax 아이디 중복체크
+	@ResponseBody
+	@RequestMapping(value="/user/idCheck", method = {RequestMethod.GET, RequestMethod.POST})
+	public boolean idCheck(@RequestParam("id") String id) {
+		
+		System.out.println("[UserController.idCheck()]");
+		System.out.println(id);
+		
+		return userService.getUser(id);
+	}
+	
+	/* json 방식으로 데이터 받기 */
+	@ResponseBody
+	@RequestMapping(value = "/user/join2", method = {RequestMethod.GET, RequestMethod.POST})
+	public int join2(@RequestBody UserVo userVo) {
+		System.out.println("[UserController.join2()]");
+		System.out.println(userVo);
+		
+		//서비스를 통해 회원정보 저장
+		return userService.insertUser(userVo);
+	}
 	
 	
 	

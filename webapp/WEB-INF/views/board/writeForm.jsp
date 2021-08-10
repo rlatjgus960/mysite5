@@ -73,7 +73,7 @@
 		<!-- //container  -->
 
 
-		<div id="footer">Copyright ⓒ 2020 황일영. All right reserved</div>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->

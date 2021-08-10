@@ -20,6 +20,7 @@ public class UserService {
 		return userDao.selectUser(userVo);
 	}
 	
+	
 	//회원가입
 	public int insertUser(UserVo userVo) {
 		System.out.println("[UserService.insertUser()]");
@@ -39,6 +40,23 @@ public class UserService {
 		System.out.println("[UserService.modifyUser()]");
 		
 		return userDao.modifyUser(userVo);
+	}
+	
+	//ajax 아이디 중복체크용
+	public boolean getUser(String id) {
+		System.out.println("[UserService.getUserIdck()]");
+		
+		boolean check;
+		
+		UserVo userVo = userDao.selectUser(id);
+		
+		if(userVo == null) {
+			check = true;
+		}else {
+			check = false;
+		}
+		
+		return check;
 	}
 
 }

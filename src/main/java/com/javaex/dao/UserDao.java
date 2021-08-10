@@ -39,6 +39,14 @@ public class UserDao {
 	public int modifyUser(UserVo userVo) {
 		System.out.println("[UserDao.modifyUser()]");
 		
-		return sqlSession.update("modifyUser", userVo);
+		return sqlSession.update("user.modifyUser", userVo);
+	}
+	
+	
+	//ajax 아이디 중복체크용 vo 가져오기
+	public UserVo selectUser(String id) {
+		
+		
+		return sqlSession.selectOne("user.selectUserIdck", id);
 	}
 }
