@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.GuestbookService;
@@ -32,9 +34,9 @@ public class ApiGuestbookController {
 
 	// ajax 방명록 저장
 	@ResponseBody // 이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에...
-	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
-	public GuestbookVo write(@ModelAttribute GuestbookVo guestbookVo) {
-		System.out.println("[ApiGuestbookController.write()]");
+	@RequestMapping(value = "/write2", method = { RequestMethod.GET, RequestMethod.POST })
+	public GuestbookVo write(@RequestBody GuestbookVo guestbookVo) {
+		System.out.println("[ApiGuestbookController.write2()]");
 
 		System.out.println(guestbookVo);
 
