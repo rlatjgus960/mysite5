@@ -40,8 +40,8 @@
 		]]>
 
 	</delete>
-	
-		<!-- 방명록 글 저장(키값 저장) - ajax -->
+
+	<!-- 방명록 글 저장(키값 저장) - ajax -->
 	<insert id="insertGuestbookKey" parameterType="com.javaex.vo.GuestbookVo">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select seq_guestbook_id.nextval from dual
@@ -52,9 +52,9 @@
          	values ( #{no }, #{name }, #{password }, #{content }, SYSDATE )
     	]]>
 	</insert>
-	
+
 	<!-- 방명록 글 1개 가져오기 ajax -->
-	<select id = "selectGuestbook" parameterType="int" resultType="com.javaex.vo.GuestbookVo">
+	<select id="selectGuestbook" parameterType="int" resultType="com.javaex.vo.GuestbookVo">
 		<![CDATA[
 			select  no,
 					name,
@@ -64,8 +64,8 @@
 			from guestbook
 			where no = #{no}
 		]]>
-	
-	
+
+
 	</select>
 
 
