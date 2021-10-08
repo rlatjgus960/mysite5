@@ -31,11 +31,23 @@ public class ApiGuestbookController {
 
 		return guestbookList; // json 형식으로 번역해서 보내줘야함
 	}
+	
+	@ResponseBody // 이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에...
+	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
+	public GuestbookVo write(@ModelAttribute GuestbookVo guestbookVo) {
+		System.out.println("[ApiGuestbookController.write()]");
+
+		System.out.println(guestbookVo);
+
+		GuestbookVo resultVo = guestbookService.writeResultVo(guestbookVo);
+
+		return resultVo;
+	}
 
 	// ajax 방명록 저장
-	@ResponseBody // 이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에...
+	@ResponseBody // 이거 없으면 resultVo.jsp로 보내라고 알아먹기때문에... //안드로이드 데이터통신
 	@RequestMapping(value = "/write2", method = { RequestMethod.GET, RequestMethod.POST })
-	public GuestbookVo write(@RequestBody GuestbookVo guestbookVo) {
+	public GuestbookVo write2(@RequestBody GuestbookVo guestbookVo) {
 		System.out.println("[ApiGuestbookController.write2()]");
 
 		System.out.println(guestbookVo);
